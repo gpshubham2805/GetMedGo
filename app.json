@@ -1,25 +1,50 @@
 {
-  "expo": {
-    "name": "GetMedGo",
-    "slug": "GetMedGo",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
-      },
-      "predictiveBackGestureEnabled": false
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
-  }
+"expo": {
+"name": "GetMedGo",
+"slug": "GetMedGo",
+"version": "1.0.0",
+"orientation": "portrait",
+"icon": "./assets/icon.png",
+"userInterfaceStyle": "light",
+"scheme": "getmedgo",
+"splash": {
+"image": "./assets/images/getmedgo-logo.png",
+"resizeMode": "contain",
+"backgroundColor": "#0F172A"
+},
+"ios": {
+"supportsTablet": true,
+"bundleIdentifier": "com.getmedgo.app"
+},
+"android": {
+"adaptiveIcon": {
+"backgroundColor": "#0F172A",
+"foregroundImage": "./assets/android-icon-foreground.png",
+"backgroundImage": "./assets/android-icon-background.png",
+"monochromeImage": "./assets/android-icon-monochrome.png"
+},
+"package": "com.getmedgo.app"
+},
+"web": {
+"favicon": "./assets/favicon.png",
+"bundler": "metro"
+},
+"plugins": [
+"expo-router",
+"expo-font",
+[
+"expo-camera",
+{
+"cameraPermission": "GetMedGo needs camera access to scan your prescriptions."
+}
+],
+[
+"expo-image-picker",
+{
+"photosPermission": "GetMedGo needs photo access to upload prescription images."
+}
+],
+"expo-sharing"
+]
+}
 }

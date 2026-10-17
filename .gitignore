@@ -39,3 +39,17 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+
+# Local environment files and API secrets
+.env
+.env.*
+!.env.example
+backend/.env
+
+# Backend dependencies
+backend/node_modules/
+
+# Backup archive — do not upload
+GetMedGo-backend-integrated.zip
+
