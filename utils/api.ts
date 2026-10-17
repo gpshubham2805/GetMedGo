@@ -1,7 +1,7 @@
 import * as FileSystem from 'expo-file-system/legacy';
 
 const API_URL =
-  process.env.EXPO_PUBLIC_API_URL || 'http://10.129.114.105:8787';
+  process.env.EXPO_PUBLIC_API_URL || 'https://getmedgo.onrender.com';
 
 function getApiUrl(path: string) {
   return `${API_URL}${path}`;

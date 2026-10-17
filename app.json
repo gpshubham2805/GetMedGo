@@ -1,50 +1,60 @@
 {
-"expo": {
-"name": "GetMedGo",
-"slug": "GetMedGo",
-"version": "1.0.0",
-"orientation": "portrait",
-"icon": "./assets/icon.png",
-"userInterfaceStyle": "light",
-"scheme": "getmedgo",
-"splash": {
-"image": "./assets/images/getmedgo-logo.png",
-"resizeMode": "contain",
-"backgroundColor": "#0F172A"
+  "expo": {
+    "name": "GetMedGo",
+    "slug": "GetMedGo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "scheme": "getmedgo",
+    "splash": {
+  "image": "./assets/splash-icon.png",
+  "resizeMode": "contain",
+  "backgroundColor": "#0F172A"
 },
-"ios": {
-"supportsTablet": true,
-"bundleIdentifier": "com.getmedgo.app"
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.getmedgo.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+  "backgroundColor": "#0F172A",
+  "foregroundImage": "./assets/icon.png",
+  "backgroundImage": "./assets/android-icon-background.png",
+  "monochromeImage": "./assets/android-icon-monochrome.png"
 },
-"android": {
-"adaptiveIcon": {
-"backgroundColor": "#0F172A",
-"foregroundImage": "./assets/android-icon-foreground.png",
-"backgroundImage": "./assets/android-icon-background.png",
-"monochromeImage": "./assets/android-icon-monochrome.png"
-},
-"package": "com.getmedgo.app"
-},
-"web": {
-"favicon": "./assets/favicon.png",
-"bundler": "metro"
-},
-"plugins": [
-"expo-router",
-"expo-font",
-[
-"expo-camera",
-{
-"cameraPermission": "GetMedGo needs camera access to scan your prescriptions."
-}
-],
-[
-"expo-image-picker",
-{
-"photosPermission": "GetMedGo needs photo access to upload prescription images."
-}
-],
-"expo-sharing"
-]
-}
+      "package": "com.getmedgo.app",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "GetMedGo needs camera access to scan your prescriptions."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "GetMedGo needs photo access to upload prescription images."
+        }
+      ],
+      "expo-sharing"
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "3593b84e-a901-499f-bff7-f75b46351ecc"
+      }
+    }
+  }
 }
