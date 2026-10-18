@@ -1,0 +1,456 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f8f9f6">
+<meta name="description" content="GetMedGo helps you review prescription information in a simple mobile experience.">
+<title>GetMedGo — Prescription information, simplified.</title>
+<style>
+:root{--bg:#f8f9f6;--surface:#fff;--ink:#17231c;--muted:#667168;--green:#176b4d;--green-dark:#104b37;--mint:#e9f2e9;--line:#e2e7e0;--max:1160px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}button{font:inherit}
+.container{width:min(var(--max),calc(100% - 64px));margin-inline:auto}
+.progress{position:fixed;z-index:100;top:0;left:0;width:0;height:3px;background:#58a77b}
+.site-header{position:sticky;top:0;z-index:50;background:rgba(248,249,246,.94);border-bottom:1px solid var(--line);backdrop-filter:blur(16px)}
+.nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:25px}
+.brand{display:inline-flex;align-items:center;gap:10px;font-size:20px;font-weight:750;letter-spacing:-1px;white-space:nowrap}
+.brand img{width:42px;height:42px;object-fit:contain;border-radius:12px}
+.nav-links{display:flex;align-items:center;gap:29px;color:#4e5a51;font-size:13px}
+.nav-links a,.footer-links a{transition:color .2s ease}
+.nav-links a:hover,.footer-links a:hover{color:var(--green)}
+.button{display:inline-flex;min-height:47px;align-items:center;justify-content:center;gap:10px;padding:0 21px;border:1px solid transparent;border-radius:999px;font-size:13px;font-weight:650;cursor:pointer;transition:background .2s,transform .2s}
+.button:hover{transform:translateY(-2px)}
+.button-primary{color:#fff;background:var(--green)}
+.button-primary:hover{background:var(--green-dark)}
+.button-outline{border-color:var(--line);background:#fff}
+.menu-toggle{display:none;width:42px;height:42px;place-items:center;border:1px solid var(--line);border-radius:50%;background:#fff;cursor:pointer}
+.menu-toggle svg{width:20px;height:20px}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;color:var(--green);font-size:11px;font-weight:750;letter-spacing:1.15px;text-transform:uppercase}
+.eyebrow-dot{width:7px;height:7px;border-radius:50%;background:#55a779}
+.hero{padding:76px 0 72px;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:64px}
+h1{max-width:580px;margin:23px 0;font-size:clamp(48px,6vw,75px);line-height:1.02;font-weight:740;letter-spacing:-4.7px}
+h1 span{color:var(--green)}
+.hero-copy{max-width:455px;margin:0;color:var(--muted);font-size:16px;line-height:1.85}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:29px}
+.preview{position:relative;min-height:480px;display:grid;place-items:center;overflow:hidden;border-radius:30px;background:#e8f0e7}
+.preview::before,.preview::after{content:"";position:absolute;border:1px solid #cbdccf;border-radius:50%}
+.preview::before{width:430px;height:430px}.preview::after{width:330px;height:330px}
+.phone{position:relative;z-index:2;width:252px;padding:9px;border:1px solid #d7dfd6;border-radius:32px;background:#fff;box-shadow:0 28px 70px #183b291d;transform:rotate(-2deg);transition:transform .35s ease}
+.phone:hover{transform:rotate(0) translateY(-5px)}
+.phone-screen{min-height:414px;padding:15px 13px;border-radius:23px;background:#fbfcfa}
+.status{display:flex;justify-content:space-between;padding:0 2px 17px;font-size:9px;font-weight:700}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.app-header > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.app-header small {
+  display: block;
+  margin: 0;
+  color: #77847a;
+  font-size: 9px;
+}
+
+.app-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.app-brand img {
+  display: block;
+  width: 29px;
+  height: 29px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.app-brand strong {
+  display: block;
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.2;
+  font-weight: 750;
+  letter-spacing: -0.5px;
+  color: #17231c;
+}
+
+.app-logo{width:40px;height:40px;object-fit:contain;border-radius:10px}
+.scan-card{padding:16px;border-radius:18px;background:#e7f2e8}
+.scan-label{color:var(--green);font-size:9px;font-weight:750;letter-spacing:.5px}
+.scan-card h3{margin:11px 0 7px;font-size:20px;letter-spacing:-.6px}
+.scan-card p{margin:0;color:#63746a;font-size:10px;line-height:1.7}
+.scan-action{margin-top:14px;padding:11px;border-radius:10px;background:var(--green);color:#fff;text-align:center;font-size:10px;font-weight:700}
+.app-list-title{margin:21px 0 10px;font-size:11px;font-weight:750}
+.app-list{display:grid;gap:8px}
+.app-row{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid #edf0eb;border-radius:12px;background:#fff}
+.app-row-icon{width:31px;height:31px;display:grid;place-items:center;border-radius:10px;background:#f0eee4;color:#6e694d;font-size:15px}
+.app-row strong{display:block;font-size:10px}
+.app-row small{display:block;margin-top:4px;color:#7a867d;font-size:8px}
+.feature-strip{background:#fff;border-block:1px solid var(--line)}
+.strip-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.strip-item{display:flex;align-items:center;gap:14px;padding:25px 20px;border-right:1px solid var(--line)}
+.strip-item:first-child{padding-left:0}.strip-item:last-child{border-right:0}
+.strip-icon{flex:0 0 43px;width:43px;height:43px;display:grid;place-items:center;border-radius:14px;background:var(--mint);color:var(--green)}
+.strip-icon svg{width:21px;height:21px}
+.strip-item strong{display:block;font-size:13px}
+.strip-item p{margin:5px 0 0;color:var(--muted);font-size:11px;line-height:1.6}
+.section{padding:94px 0}
+.section-heading{display:flex;align-items:end;justify-content:space-between;gap:40px;margin-bottom:35px}
+.section-heading h2{max-width:630px;margin:15px 0 0;font-size:clamp(38px,4.8vw,56px);line-height:1.07;letter-spacing:-3px}
+.section-heading>p{max-width:370px;margin:0 0 4px;color:var(--muted);font-size:14px;line-height:1.85}
+.feature-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.feature-card{min-height:350px;display:flex;flex-direction:column;padding:25px;border:1px solid var(--line);border-radius:22px;background:#fff;transition:transform .25s,box-shadow .25s}
+.feature-card:hover{transform:translateY(-4px);box-shadow:0 15px 38px #20372a0b}
+.feature-card:nth-child(2){background:#edf3fa;border-color:#e2eaf2}
+.feature-card:nth-child(3){background:#f8f2e5;border-color:#eee6d5}
+.feature-card:nth-child(4){background:#f0effa;border-color:#e5e3f4}
+.feature-icon{width:47px;height:47px;flex:0 0 47px;display:grid;place-items:center;border-radius:15px;background:var(--mint);color:var(--green)}
+.feature-card:nth-child(2) .feature-icon{background:#dbe8f6}
+.feature-card:nth-child(3) .feature-icon{background:#f1e4c5}
+.feature-card:nth-child(4) .feature-icon{background:#e4e2f8;color:#5756a5}
+.feature-icon svg{width:23px;height:23px}
+.feature-visual{height:125px;margin:16px 0 18px;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:15px}
+.feature-visual img{display:block;width:100%;height:100%;object-fit:contain;transition:transform .3s ease}
+.feature-card:hover .feature-visual img{transform:scale(1.04)}
+.scan-visual{background:#f1f6f0}
+.medicine-visual{background:#e1ebf6}
+.history-visual{background:#f6edd9}
+.ai-visual{background:#e8e6f8}
+.feature-card h3{margin:auto 0 9px;padding-top:0;font-size:19px;letter-spacing:-.6px}
+.feature-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.8}
+.download{padding:0 0 80px}
+.download-panel{display:flex;align-items:center;justify-content:space-between;gap:32px;padding:38px;border-radius:26px;background:var(--mint)}
+.download-title{display:flex;align-items:center;gap:16px}
+.download-logo{width:65px;height:65px;flex:0 0 65px;object-fit:contain;border-radius:17px}
+.download-panel h2{margin:11px 0 0;font-size:clamp(30px,4vw,43px);line-height:1.08;letter-spacing:-2px}
+.download-panel p{max-width:500px;margin:14px 0 0;color:var(--muted);font-size:13px;line-height:1.8}
+.info-section{padding:68px 0;background:#fff;border-top:1px solid var(--line)}
+.info-section.alt{background:#f1f4ef}
+.info-heading{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:27px}
+.info-heading h2{margin:12px 0 0;font-size:clamp(34px,4.5vw,48px);line-height:1.1;font-weight:650;letter-spacing:-2.2px}
+.info-heading>p{max-width:330px;margin:0;color:var(--muted);font-size:13px;line-height:1.8}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid #dfe5dc;border-bottom:1px solid #dfe5dc}
+.info-card{padding:25px 28px 25px 0;background:transparent}
+.info-card+.info-card{padding-left:28px;border-left:1px solid #dfe5dc}
+.info-card h3{margin:0 0 9px;font-size:15px;font-weight:650}
+.info-card p{max-width:440px;margin:0;color:#5e6a61;font-size:13px;line-height:1.8}
+.contact-section{padding:46px 0;background:#fff;border-top:1px solid var(--line)}
+.contact-inner{display:flex;align-items:center;justify-content:space-between;gap:30px}
+.contact-inner h2{margin:0;font-size:clamp(28px,4vw,38px);letter-spacing:-1.8px}
+.contact-links{display:flex;flex-wrap:wrap;gap:12px}
+.social-link{display:inline-flex;align-items:center;gap:12px;min-width:190px;padding:16px 19px;border:1px solid var(--line);border-radius:15px;background:#fafbf9;transition:transform .2s,box-shadow .2s,border-color .2s}
+.social-link:hover{transform:translateY(-3px);border-color:#cbd8cc;box-shadow:0 10px 25px #183b2910}
+.social-link svg{width:25px;height:25px;flex:0 0 25px}
+.social-link strong{font-size:14px}
+.social-link .arrow{margin-left:auto;color:#7c877e}
+.instagram{color:#c13584}.linkedin{color:#0a66c2}
+footer{padding:34px 0 20px;background:var(--bg);border-top:1px solid var(--line)}
+.footer-top{display:flex;align-items:start;justify-content:space-between;gap:36px;padding-bottom:28px}
+.footer-links{display:flex;flex-wrap:wrap;gap:42px}
+.footer-col h3{margin:0 0 13px;color:#7b857e;font-size:10px;text-transform:uppercase;letter-spacing:.8px}
+.footer-col a{display:block;margin:11px 0;font-size:12px}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:15px;padding-top:19px;border-top:1px solid var(--line);color:#7b857e;font-size:11px}
+.creator{color:var(--ink);font-weight:750;letter-spacing:.6px}
+.reveal{opacity:0;transform:translateY(15px);transition:opacity .6s ease,transform .6s ease;transition-delay:var(--delay,0ms)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+a:focus-visible,button:focus-visible{outline:3px solid #79b18e;outline-offset:4px}
+@media(max-width:900px){
+.container{width:calc(100% - 44px)}
+.hero-grid{gap:30px}
+h1{font-size:clamp(46px,6.2vw,63px);letter-spacing:-3.6px}
+.preview{min-height:425px}
+.phone{width:235px}
+.section-heading{align-items:start;flex-direction:column;gap:15px}
+.download-panel{padding:30px}
+.footer-links{gap:28px}
+.contact-inner{align-items:start;flex-direction:column}
+.feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:680px){
+.container{width:calc(100% - 36px)}
+.nav{height:66px}
+.brand{font-size:19px}
+.brand img{width:39px;height:39px}
+.nav>.button{display:none}
+.menu-toggle{display:grid}
+.nav-links{position:absolute;top:66px;left:0;right:0;display:none;padding:8px 22px 18px;background:var(--bg);border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;gap:0}
+.nav-links.open{display:flex}
+.nav-links a{padding:15px 0;border-bottom:1px solid var(--line)}
+.hero{padding:49px 0 30px}
+.hero-grid{grid-template-columns:1fr;gap:30px}
+h1{font-size:clamp(46px,11.5vw,64px);letter-spacing:-3.4px}
+.hero-copy{font-size:15px}
+.preview{min-height:425px;border-radius:23px}
+.strip-grid{grid-template-columns:1fr}
+.strip-item,.strip-item:first-child{padding:17px 0;border-right:0;border-bottom:1px solid var(--line)}
+.strip-item:last-child{border-bottom:0}
+.section{padding:66px 0}
+.section-heading h2{font-size:41px;letter-spacing:-2.3px}
+.feature-grid{grid-template-columns:1fr;gap:12px}
+.feature-card{min-height:320px;padding:23px}
+.feature-visual{height:135px}
+.download{padding-bottom:60px}
+.download-panel{align-items:start;flex-direction:column;gap:23px;padding:25px 22px}
+.download-panel h2{font-size:33px;letter-spacing:-1.7px}
+.download-logo{width:54px;height:54px;flex-basis:54px}
+.download-title{gap:12px}
+.info-section{padding:49px 0}
+.info-heading{align-items:start;flex-direction:column;gap:10px}
+.info-heading h2{font-size:35px}
+.info-grid{grid-template-columns:1fr}
+.info-card{padding:21px 0}
+.info-card+.info-card{padding-left:0;border-left:0;border-top:1px solid #dfe5dc}
+.contact-section{padding:35px 0}
+.contact-links{width:100%;flex-direction:column}
+.social-link{width:100%}
+.footer-top{flex-direction:column;gap:27px}
+.footer-links{width:100%;justify-content:space-between;gap:20px}
+.footer-bottom{align-items:start;flex-direction:column}
+}
+@media(max-width:480px){.feature-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){
+html{scroll-behavior:auto}
+*,*::before,*::after{transition-duration:.01ms!important}
+.reveal{opacity:1;transform:none}
+}
+
+/* AI Assistant & Chatbot — phone preview */
+.ai-assistant-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ai-assistant-icon {
+  flex-shrink: 0;
+  background: #eee5ff;
+  color: #7044d8;
+}
+
+.ai-assistant-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.ai-assistant-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.ai-assistant-text strong {
+  display: block;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.ai-assistant-text small {
+  display: block;
+  margin-top: 4px;
+  color: #77847a;
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.ai-assistant-arrow {
+  color: #63746a;
+  font-size: 23px;
+  line-height: 1;
+}
+
+
+
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<header class="site-header">
+<nav class="container nav" aria-label="Main navigation">
+<a class="brand" href="#home" aria-label="GetMedGo home"><img src="getmedgo-logo.png" alt="GetMedGo logo"><span>GetMedGo</span></a>
+<div class="nav-links" id="navLinks">
+<a href="#features">Features</a><a href="#download">Get the app</a><a href="#privacy">Privacy</a><a href="#ownership">Ownership</a><a href="#contact">Contact</a>
+</div>
+<a
+  class="button button-primary"
+  href="YOUR_APK_DOWNLOAD_URL"
+  download
+>
+  Download for Android <span aria-hidden="true">↓</span>
+</a>
+<button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
+</nav>
+</header>
+<main>
+<section class="hero" id="home">
+<div class="container hero-grid">
+<div class="reveal">
+<div class="eyebrow"><span class="eyebrow-dot"></span> Prescription care, made simpler</div>
+<h1>Prescription information, <br><span>makes simplify.</span></h1>
+<p class="hero-copy">Review prescription images, explore available medicine information, and revisit your saved scans in one simple mobile experience.</p>
+<div class="hero-actions"><a
+  class="button button-primary"
+  href="YOUR_APK_DOWNLOAD_URL"
+  download
+>
+  Download for Android <span aria-hidden="true">↓</span>
+</a><a class="button button-outline" href="#download">Android app</a></div>
+</div>
+<div class="preview reveal" style="--delay:120ms" aria-label="Illustrative GetMedGo app preview">
+<div class="phone"><div class="phone-screen">
+<div class="status"><span></span><span></span></div>
+
+
+<div class="app-header">
+  <div>
+    <small>WELCOME TO</small>
+    <div class="app-brand">
+      <img src="./getmedgo-logo.png" alt="GetMedGo logo">
+      <strong>GetMedGo</strong>
+    </div>
+  </div>
+</div>
+
+
+<div class="scan-card"><div class="scan-label">PRESCRIPTION REVIEW</div><h3>Start with a scan.</h3><p>Bring your prescription information into one easy-to-review place.</p><div class="scan-action">＋ &nbsp; Scan prescription</div></div>
+<div class="app-list-title">Your information</div>
+<div class="app-list">
+<div class="app-row"><div class="app-row-icon">▤</div><div><strong>Medicine details</strong><small>Review available information</small></div></div>
+<div class="app-row"><div class="app-row-icon">◷</div><div><strong>Recent scans</strong><small>Return to previous scans</small></div></div>
+<div class="app-row"><div class="app-row-icon">⌕</div><div><strong>Prescription history</strong><small>Find saved records</small></div></div>
+
+<div class="app-row ai-assistant-row">
+  <div class="app-row-icon ai-assistant-icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="1.8"
+         stroke-linecap="round" stroke-linejoin="round">
+      <rect x="5" y="8" width="14" height="11" rx="3"/>
+      <path d="M12 4v4M9 12h.01M15 12h.01M9 16h6"/>
+      <path d="m18 3 .7 1.8L21 5.5l-2.3.7L18 8l-.7-1.8-2.3-.7 2.3-.7L18 3Z"/>
+    </svg>
+  </div>
+
+  <div class="ai-assistant-text">
+    <strong>AI assistant &amp; chatbot</strong>
+    <small>Ask questions and get instant support</small>
+  </div>
+
+  <span class="ai-assistant-arrow" aria-hidden="true">›</span>
+</div>
+
+</div></div></div></div>
+</div>
+</section>
+<section class="feature-strip" aria-label="Key features">
+<div class="container strip-grid">
+<div class="strip-item reveal"><div class="strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg></div><div><strong>Prescription scans</strong><p>Capture images for review.</p></div></div>
+<div class="strip-item reveal" style="--delay:80ms"><div class="strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div><div><strong>Medicine information</strong><p>Review available details.</p></div></div>
+<div class="strip-item reveal" style="--delay:160ms"><div class="strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 11a8 8 0 1 1 2.4 5.7M4 5v6h6"/></svg></div><div><strong>Scan history</strong><p>Return to saved scans.</p></div></div>
+<div class="strip-item reveal" style="--delay:240ms"><div class="strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/></svg></div><div><strong>AI assistant</strong><p>Medicine-related questions and support.</p></div></div>
+</div>
+</section>
+<section class="section" id="features">
+<div class="container">
+<div class="section-heading reveal"><div><div class="eyebrow"><span class="eyebrow-dot"></span> Features</div><h2>Features Inside App.</h2></div><p>Scan the prescription and we will make it simplify</p></div>
+<div class="feature-grid">
+<article class="feature-card reveal">
+<div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><circle cx="12" cy="12" r="4"/></svg></div>
+<div class="feature-visual scan-visual"><img src="images/scan-prescription.png" alt="Illustration of scanning a prescription" loading="lazy"></div>
+<h3>Scan a prescription</h3><p>Capture a prescription image for digital review.</p>
+</article>
+<article class="feature-card reveal" style="--delay:100ms">
+<div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg></div>
+<div class="feature-visual medicine-visual"><img src="images/medicine-details.png" alt="Illustration of medicine information" loading="lazy"></div>
+<h3>Review medicine details</h3><p>Explore available medicine information in an organized layout.</p>
+</article>
+<article class="feature-card reveal" style="--delay:200ms">
+<div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 11a8 8 0 1 1 2.4 5.7M4 5v6h6"/><path d="M12 7v5l3 2"/></svg></div>
+<div class="feature-visual history-visual"><img src="images/scan-history.png" alt="Illustration of saved prescription scans" loading="lazy"></div>
+<h3>Access scan history</h3><p>Return to previously saved prescription scans.</p>
+</article>
+<article class="feature-card reveal" style="--delay:300ms">
+<div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l1.1 2.9L23 19l-2.9 1.1L19 23l-1.1-2.9L15 19l2.9-1.1L19 15z"/></svg></div>
+<div class="feature-visual ai-visual"><img src="images/ai-assistant.png" alt="AI assistant and chatbot illustration" loading="lazy"></div>
+<h3>AI assistant &amp; chatbot</h3><p>Ask questions about prescription and medicine information with AI-powered support.</p>
+</article>
+</div>
+</div>
+</section>
+<section class="download" id="download"><div class="container">
+<div class="download-panel reveal"><div><div class="download-title"><img class="download-logo" src="getmedgo-logo.png" alt="GetMedGo app logo"><div><div class="eyebrow"><span class="eyebrow-dot"></span> GetMedGo for Android</div><h2>Ready when you are.</h2></div></div><p>The Android download link will be available here when the release is ready.</p></div><a
+  class="button button-primary"
+  href="YOUR_APK_DOWNLOAD_URL"
+  download
+>
+  Download for Android <span aria-hidden="true">↓</span>
+</a></div>
+</div></section>
+<section class="info-section" id="privacy"><div class="container">
+<div class="info-heading reveal"><div><div class="eyebrow">User Privacy</div><h2>Your data. Your privacy.</h2></div><p>Clear information about how user data is handled.</p></div>
+<div class="info-grid">
+<article class="info-card reveal"><h3>Website</h3><p>GetMedGo respects user privacy and is committed to protecting personal information through responsible data handling and appropriate security measures.</p></article>
+<article class="info-card reveal" style="--delay:100ms"><h3>Application</h3><p>Review the app’s privacy policy for details on prescription images and related information.</p></article>
+</div></div></section>
+<section class="info-section alt" id="ownership"><div class="container">
+<div class="info-heading reveal"><div><div class="eyebrow">Ownership &amp; Rights</div><h2>Created by Shubham Shukla.</h2></div><p>GetMedGo and its original work.</p></div>
+<div class="info-grid">
+<article class="info-card reveal"><h3>GetMedGo</h3><p>GetMedGo is developed and owned by Shubham Shukla. All rights reserved for original code, design, and branding. Unauthorized use or reproduction is prohibited.<br><br>© 2026 Shubham Shukla. All rights reserved.</p></article>
+<article class="info-card reveal" style="--delay:100ms"><h3>Third-party licences</h3><p>External libraries and assets remain subject to their respective licences.</p></article>
+</div></div></section>
+<section class="contact-section" id="contact"><div class="container contact-inner">
+<h2 class="reveal">Connect with the Developer.</h2>
+<div class="contact-links">
+<a class="social-link reveal" href="https://www.instagram.com/gpshubham_shukla" target="_blank" rel="noopener noreferrer" aria-label="Visit Instagram">
+<svg class="instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><strong>Instagram</strong><span class="arrow" aria-hidden="true">↗</span>
+</a>
+<a class="social-link reveal" style="--delay:100ms" href="https://www.linkedin.com/in/shubham-shukla-65714231b" target="_blank" rel="noopener noreferrer" aria-label="Connect on LinkedIn">
+<svg class="linkedin" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.2 3.5a2.2 2.2 0 1 0 0 4.4 2.2 2.2 0 0 0 0-4.4ZM3.4 9.5H7v11H3.4zM9.2 9.5h3.5V11h.1a3.8 3.8 0 0 1 3.4-1.9c3.6 0 4.3 2.3 4.3 5.3v6.1h-3.7v-5.4c0-1.3 0-3-1.9-3s-2.2 1.4-2.2 2.9v5.5H9.2z"/></svg><strong>LinkedIn</strong><span class="arrow" aria-hidden="true">↗</span>
+</a>
+</div></div></section>
+</main>
+<footer><div class="container">
+<div class="footer-top">
+<a class="brand" href="#home" aria-label="GetMedGo home"><img src="getmedgo-logo.png" alt="GetMedGo logo"><span>GetMedGo</span></a>
+<div class="footer-links">
+<div class="footer-col"><h3>Explore</h3><a href="#features">Features</a><a href="#download">Get the app</a></div>
+<div class="footer-col"><h3>Information</h3><a href="#privacy">Privacy</a><a href="#ownership">Ownership &amp; Rights</a></div>
+<div class="footer-col"><h3>Social</h3><a href="https://www.instagram.com/gpshubham_shukla" target="_blank" rel="noopener noreferrer">Instagram ↗</a><a href="https://www.linkedin.com/in/shubham-shukla-65714231b" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></div>
+</div></div>
+<div class="footer-bottom"><span>© <span id="currentYear"></span> GetMedGo</span><span class="creator">BUILT BY gpshubham_shukla<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(SHUBHAM SHUKLA)</span></div>
+</div></footer>
+<script>
+document.getElementById("currentYear").textContent=new Date().getFullYear();
+const menuToggle=document.getElementById("menuToggle");
+const navLinks=document.getElementById("navLinks");
+function closeMenu(){navLinks.classList.remove("open");menuToggle.setAttribute("aria-expanded","false");menuToggle.setAttribute("aria-label","Open menu")}
+menuToggle.addEventListener("click",()=>{const open=navLinks.classList.toggle("open");menuToggle.setAttribute("aria-expanded",String(open));menuToggle.setAttribute("aria-label",open?"Close menu":"Open menu")});
+navLinks.querySelectorAll("a").forEach(link=>link.addEventListener("click",closeMenu));
+window.addEventListener("resize",()=>{if(window.innerWidth>680)closeMenu()});
+const progress=document.getElementById("progress");
+let scrollScheduled=false;
+function updateProgress(){const height=document.documentElement.scrollHeight-window.innerHeight;const percent=height>0?(window.scrollY/height)*100:0;progress.style.width=Math.min(100,percent)+"%";scrollScheduled=false}
+window.addEventListener("scroll",()=>{if(!scrollScheduled){requestAnimationFrame(updateProgress);scrollScheduled=true}},{passive:true});
+updateProgress();
+const revealItems=document.querySelectorAll(".reveal");
+const reducedMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if(reducedMotion||!("IntersectionObserver" in window)){revealItems.forEach(item=>item.classList.add("visible"))}
+else{const observer=new IntersectionObserver((entries,currentObserver)=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");currentObserver.unobserve(entry.target)}})},{threshold:.12,rootMargin:"0px 0px -20px 0px"});revealItems.forEach(item=>observer.observe(item))}
+</script>
+</body>
+</html>
