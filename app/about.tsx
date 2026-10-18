@@ -45,7 +45,7 @@ export default function AboutScreen() {
       >
         <View style={styles.brandCard}>
           <Image
-  source={require('../assets/images/getmedgo-logo.png')}
+  source={require('../assets/icon.png')}
   style={styles.aboutLogo}
   resizeMode="contain"
 />

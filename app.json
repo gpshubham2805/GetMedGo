@@ -7,24 +7,26 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "scheme": "getmedgo",
-    "splash": {
-  "image": "./assets/splash-icon.png",
-  "resizeMode": "contain",
-  "backgroundColor": "#0F172A"
-},
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.getmedgo.app"
     },
+    "splash": {
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
     "android": {
       "adaptiveIcon": {
-  "backgroundColor": "#0F172A",
-  "foregroundImage": "./assets/icon.png",
-  "backgroundImage": "./assets/android-icon-background.png",
-  "monochromeImage": "./assets/android-icon-monochrome.png"
-},
+        "backgroundColor": "#0F172A",
+        "foregroundImage": "./assets/icon.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
       "package": "com.getmedgo.app",
       "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ]
@@ -48,13 +50,28 @@
           "photosPermission": "GetMedGo needs photo access to upload prescription images."
         }
       ],
-      "expo-sharing"
+      "expo-sharing",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-logo.png",
+          "imageWidth": 180,
+          "resizeMode": "contain",
+          "backgroundColor": "#FFFFFF"
+        }
+      ]
     ],
     "extra": {
       "router": {},
       "eas": {
         "projectId": "3593b84e-a901-499f-bff7-f75b46351ecc"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/3593b84e-a901-499f-bff7-f75b46351ecc"
     }
   }
 }

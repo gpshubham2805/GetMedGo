@@ -72,7 +72,7 @@ export default function HomeScreen() {
             <Text style={styles.greeting}>Welcome to</Text>
             <View style={styles.logoRow}>
               <Image
-  source={require('../../assets/images/getmedgo-logo.png')}
+  source={require('../../assets/icon.png')}
   style={styles.appLogo}
   resizeMode="contain"
 />

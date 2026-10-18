@@ -81,7 +81,7 @@ export default function Index() {
       >
         <View style={styles.logoContainer}>
           <Image
-            source={require('../assets/images/getmedgo-logo.png')}
+            source={require('../assets/icon.png')}
             style={styles.logo}
             resizeMode="contain"
             accessibilityLabel="GetMedGo logo"
