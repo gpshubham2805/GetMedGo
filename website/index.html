@@ -273,6 +273,34 @@ html{scroll-behavior:auto}
   line-height: 1;
 }
 
+.download-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.download-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.download-button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .download-panel {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .download-button {
+    align-self: flex-start;
+  }
+}
+
 
 
 </style>
@@ -393,16 +421,36 @@ html{scroll-behavior:auto}
 </div>
 </section>
 <section class="download" id="download"><div class="container">
-<div class="download-panel reveal"><div><div class="download-title"><img class="download-logo" src="getmedgo-logo.png" alt="GetMedGo app logo"><div><div class="eyebrow"><span class="eyebrow-dot"></span> GetMedGo for Android</div><h2>Download APK</h2></div></div><p>Download GetMedGo for Android and get started.</p>
+<div class="download-panel reveal">
 
-<a
-  class="button button-primary"
-  href="https://github.com/gpshubham2805/GetMedGo/releases/download/v1.0.0/GetMedGo.apk"
-  download
->
-  Download GetMedGo APK <span aria-hidden="true"></span>
+  <div class="download-content">
+    <div class="download-title">
+      <img
+        class="download-logo"
+        src="getmedgo-logo.png"
+        alt="GetMedGo app logo"
+      />
 
-</a>
+      <div>
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          GetMedGo for Android
+        </div>
+
+        <h2>Download APK</h2>
+      </div>
+    </div>
+
+    <p>Download GetMedGo for Android and get started.</p>
+  </div>
+
+  <a
+    class="button button-primary download-button"
+    href="https://github.com/gpshubham2805/GetMedGo/releases/download/v1.0.0/GetMedGo.apk"
+  >
+    Download GetMedGo APK <span aria-hidden="true"></span>
+  </a>
+
 </div>
 </div></section>
 <section class="info-section" id="privacy"><div class="container">
