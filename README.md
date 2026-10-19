@@ -18,6 +18,17 @@
 - 📱 **Mobile Experience** — Built with React Native and Expo.
 - 🌐 **Project Website** — Access the project's website and app download page.
 
+## 📱 App Screenshots
+
+### Home Screen
+![GetMedGo Home Screen](screenshots/home.png)
+
+### Prescription Analysis
+![Prescription Analysis](screenshots/prescription-analysis.png)
+
+### AI Assistant
+![AI Assistant](screenshots/ai-chat.png)
+
 ## 🛠️ Tech Stack
 
 - **Mobile App:** React Native, Expo, TypeScript
